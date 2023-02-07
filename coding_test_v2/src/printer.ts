@@ -3,6 +3,8 @@ export class Printer {
     private word1: string, private word2: string) {}
 
     print() {
+        const buffer: (string | number)[] = [];
+
         let distance = this.getDistance(
             this.word1.length - 1,
             this.word2.length - 1
@@ -13,9 +15,9 @@ export class Printer {
     
         let curWord = Array.from(this.word2);
     
-        console.log(distance);
+        buffer.push(distance);
     
-        console.log(curWord.join(""));
+        buffer.push(curWord.join(""));
     
         while (distance > 0) {
             const del = this.getDistance(i, j - 1);
@@ -27,12 +29,12 @@ export class Printer {
                 i -= 1;
                 j -= 1;
                 distance = replace;
-                console.log(curWord.join(""));
+                buffer.push(curWord.join(""));
             } else if (del < distance) {
                 curWord[j] = "";
                 j -= 1;
                 distance = del;
-                console.log(curWord.join(""));
+                buffer.push(curWord.join(""));
             } else if (insert < distance) {
                 curWord = this.insertIntoArray(
                     curWord,
@@ -41,12 +43,16 @@ export class Printer {
                 );
                 i -= 1;
                 distance = insert;
-                console.log(curWord.join(""));
+                buffer.push(curWord.join(""));
             } else {
                 i -= 1;
                 j -= 1;
             }
         }
+
+        const output = buffer.join('\n');
+
+        console.log(output)
     }
 
     private insertIntoArray(arr: string[], index: number, newItem: string) {
