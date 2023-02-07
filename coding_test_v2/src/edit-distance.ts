@@ -35,11 +35,11 @@ export class EditDistance {
                     continue;
                 }
 
-                const replace = this.getDistance(i - 1, j - 1);
-                const insert = this.getDistance(i, j - 1);
-                const del = this.getDistance(i - 1, j);
+                const replace = this.getDistance(i - 1, j - 1) + 1;
+                const insert = this.getDistance(i, j - 1) + 1;
+                const del = this.getDistance(i - 1, j) + 1;
 
-                this.matrix.set(i, j, Math.min(replace, insert, del) + 1);
+                this.matrix.set(i, j, Math.min(replace, insert, del));
             }
         }
     }
